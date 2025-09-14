@@ -11,10 +11,9 @@ export default async function HomePage() {
 
   return (
     <main className="">
-      <h1 className="text-4xl font-bold">Welcome to Expensely</h1>
+      <h1 className="text-4xl font-bold">Welcome to Expensely {session.user?.name?.split(" ")?.[0]}</h1>
       <p className="mt-4 text-lg">Your one-stop solution for expense tracking.</p>
-      {/* Your dashboard or main app content here */}
-      <h1>Welcome, {session.user?.email}!</h1>
+      
     </main>
   );
 }
