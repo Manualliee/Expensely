@@ -59,10 +59,12 @@ export default function ExpenseChart({
     description: string;
   }[];
 }) {
-  const chartData = data.map((expense, idx) => ({ ...expense, idx }));
+  const chartData = [...data]
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    .map((expense, idx) => ({ ...expense, idx }));
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart data={chartData}>
         <XAxis
           dataKey="idx"
@@ -70,15 +72,14 @@ export default function ExpenseChart({
         />
         <YAxis />
         <Tooltip content={CustomTooltip} />
-        <Bar dataKey="amount" animationDuration={800}>
+        <Bar dataKey="amount" animationDuration={500}>
           {chartData.map((entry, index) => (
             <Cell
               key={`cell-${index}`}
-              fill={categoryColors[entry.category] || "#64748b"} 
+              fill={categoryColors[entry.category] || "#64748b"}
             />
           ))}
         </Bar>
-       
       </BarChart>
     </ResponsiveContainer>
   );

@@ -20,12 +20,12 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // 1. Find user by email
+        // Find user by email
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
         });
 
-        // 2. If user not found or password doesn't match, return null
+        // If user not found or password doesn't match, return null
         if (!user) return null;
 
         const isValid = await bcrypt.compare(
@@ -34,7 +34,7 @@ export const authOptions: NextAuthOptions = {
         );
         if (!isValid) return null;
 
-        // 3. Return user object (without password)
+      // Return user object (without password)
         return { id: user.id.toString(), name: user.name, email: user.email };
       },
     }),

@@ -19,6 +19,7 @@ export default function ExpenseForm() {
     }[]
   >([]);
 
+  // GET requests to fetch expenses on component mount
   useEffect(() => {
     fetch("/api/expenses")
       .then((res) => res.json())
@@ -138,31 +139,39 @@ export default function ExpenseForm() {
         <button type="submit">Add Expense</button>
       </form>
       <ul>
-        {expense.map((exp) => (
-          <li key={exp.id}>
-            {exp.date} - ${exp.amount} - {exp.category} - {exp.description}
-            <button
-              onClick={async () => {
-                const res = await fetch(`/api/expenses/${exp.id}`, {
-                  method: "DELETE",
-                });
-                if (res.ok) {
-                  fetch("/api/expenses")
-                    .then((res) => res.json())
-                    .then((data) => setExpense(data))
-                    .catch((err) =>
-                      console.error("Failed to fetch expenses:", err)
+        {expense
+          .slice()
+          .sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+          )
+          .map((exp) => (
+            <li key={exp.id}>
+              {exp.date} - ${exp.amount} - {exp.category} - {exp.description}
+              <button
+                onClick={async () => {
+                  const res = await fetch(`/api/expenses/${exp.id}`, {
+                    method: "DELETE",
+                  });
+                  if (res.ok) {
+                    fetch("/api/expenses")
+                      .then((res) => res.json())
+                      .then((data) => setExpense(data))
+                      .catch((err) =>
+                        console.error("Failed to fetch expenses:", err)
+                      );
+                  } else {
+                    console.error(
+                      "Failed to delete expense:",
+                      await res.json()
                     );
-                } else {
-                  console.error("Failed to delete expense:", await res.json());
-                }
-              }}
-              style={{ marginLeft: "1em", color: "red" }}
-            >
-              Delete
-            </button>
-          </li>
-        ))}
+                  }
+                }}
+                style={{ marginLeft: "1em", color: "red" }}
+              >
+                Delete
+              </button>
+            </li>
+          ))}
       </ul>
 
       <ExpenseChart data={expense} />
