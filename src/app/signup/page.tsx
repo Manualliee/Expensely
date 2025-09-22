@@ -16,6 +16,13 @@ export default function SignupPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        // Check for empty fields
+        if (!firstName || !lastName || !email || !password) {
+            setError("All fields are required");
+            return;
+        }
+
         if (password !== confirmPassword) {
             setError("Passwords do not match");
             return;
