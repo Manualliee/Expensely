@@ -59,7 +59,7 @@ export default function SignupPage() {
     };
     return (
         <div className="dark:bg-dark-background dark:text-dark-foreground min-h-screen flex items-center justify-center transition-colors bg-light-background text-light-foreground">
-            <div className="w-[80vw] h-[80vh] dark:bg-dark-card border-2 dark:border-dark-border rounded-4xl flex flex-row bg-light-card overflow-hidden">
+            <div className="w-[80vw] h-[80vh] dark:bg-dark-card border-2 dark:border-dark-border rounded-4xl flex flex-row overflow-hidden">
                 <div className="flex-1 h-full flex flex-col justify-center items-center p-2">
                     <form className="w-full h-full flex flex-col justify-evenly items-center p-2" onSubmit={handleSubmit}>
                         <h2 className="text-3xl font-semibold mb-4">Sign Up</h2>

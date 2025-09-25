@@ -16,14 +16,16 @@ export default function HomePage() {
   }
 
   return (
-    <main className="">
-      <h1 className="text-4xl font-bold">
-        Welcome to Expensely {session.user?.name?.split(" ")?.[0]}
-      </h1>
-      <p className="mt-4 text-lg">
-        Your one-stop solution for expense tracking.
-      </p>
-      <button onClick={() => signOut({ callbackUrl: "/login" })}>Logout</button>
+    <main className="bg-light-background text-light-foreground dark:bg-dark-background dark:text-dark-foreground min-h-screen flex flex-col items-center justify-center transition-colors p-4">
+      <div>
+        <h1 className="text-4xl font-bold">
+          Welcome to Expensely {session.user?.name?.split(" ")?.[0]}!
+        </h1>
+        <p className="mt-4 text-lg">
+          Your one-stop solution for expense tracking.
+        </p>
+        <button onClick={() => signOut({ callbackUrl: "/login" })}>Logout</button>
+      </div>
       <ExpenseForm />
     </main>
   );

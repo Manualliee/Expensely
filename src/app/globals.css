@@ -7,7 +7,7 @@
   --color-light-background: #f5f7fa;
   --color-light-foreground: #23272f;
   --color-light-card: #b3b2b2;
-  --color-light-border: #7fdce5;
+  --color-light-border: #13151a;
   --color-light-accent: #5eb471;
   /* Dark Theme Colors */
   --color-dark-background: #141314;
@@ -21,8 +21,8 @@
   /* Light Theme Colors */
   --color-light-background: #f5f7fa;
   --color-light-foreground: #23272f;
-  --color-light-card: #ffffff;
-  --color-light-border: #7fdce5;
+  --color-light-card: #b3b2b2;
+  --color-light-border: #13151a;
   --color-light-accent: #5eb471;
 
   /* Dark Theme Colors */

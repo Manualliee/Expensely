@@ -72,109 +72,116 @@ export default function ExpenseForm() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="expense-amount">Amount</label>
-          <input
-            type="number"
-            inputMode="decimal"
-            id="expense-amount"
-            step="0.01"
-            value={amount}
-            onChange={(e) => {
-              const value = e.target.value;
-              // Allow only numbers and up to two decimal places
-              if (value === "" || /^\d+(\.\d{0,2})?$/.test(value)) {
-                setAmount(value);
-              }
-            }}
-            onKeyDown={(e) => {
-              if (
-                e.key === "e" ||
-                e.key === "E" ||
-                e.key === "+" ||
-                e.key === "-"
-              ) {
-                e.preventDefault();
-              }
-            }}
-          />
-          {error.amount && <p className="text-red-500">{error.amount}</p>}
-        </div>
-
-        <label htmlFor="expense-category">Category</label>
-        <select
-          id="expense-category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="food">Food</option>
-          <option value="transportation">Transportation</option>
-          <option value="utilities">Utilities</option>
-          <option value="entertainment">Entertainment</option>
-          <option value="health">Health</option>
-          <option value="other">Other</option>
-        </select>
-
-        <label htmlFor="expense-description">Description</label>
-        <input
-          type="text"
-          value={description}
-          id="expense-description"
-          onChange={(e) => setDescription(e.target.value)}
-        />
-
-        <div>
-          <label htmlFor="expense-date">Date</label>
-          <input
-            type="date"
-            id="expense-date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-          />
-          {error.date && <p className="text-red-500">{error.date}</p>}
-        </div>
-
-        <button type="submit">Add Expense</button>
-      </form>
-      <ul>
-        {expense
-          .slice()
-          .sort(
-            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-          )
-          .map((exp) => (
-            <li key={exp.id}>
-              {exp.date} - ${exp.amount} - {exp.category} - {exp.description}
-              <button
-                onClick={async () => {
-                  const res = await fetch(`/api/expenses/${exp.id}`, {
-                    method: "DELETE",
-                  });
-                  if (res.ok) {
-                    fetch("/api/expenses")
-                      .then((res) => res.json())
-                      .then((data) => setExpense(data))
-                      .catch((err) =>
-                        console.error("Failed to fetch expenses:", err)
-                      );
-                  } else {
-                    console.error(
-                      "Failed to delete expense:",
-                      await res.json()
-                    );
+    <div className="bg-light-background text-light-foreground dark:text-dark-foreground dark:bg-dark-background grid grid-cols-[1fr_1.2fr] gap-4 mt-8 w-full max-w-5xl">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-1 flex-col gap-4 dark:bg-dark-card border dark:border-dark-border p-4 rounded-lg shadow-md">
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="expense-amount">Amount</label>
+              <input
+                type="number"
+                inputMode="decimal"
+                id="expense-amount"
+                step="0.01"
+                value={amount}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  // Allow only numbers and up to two decimal places
+                  if (value === "" || /^\d+(\.\d{0,2})?$/.test(value)) {
+                    setAmount(value);
                   }
                 }}
-                style={{ marginLeft: "1em", color: "red" }}
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-      </ul>
+                onKeyDown={(e) => {
+                  if (
+                    e.key === "e" ||
+                    e.key === "E" ||
+                    e.key === "+" ||
+                    e.key === "-"
+                  ) {
+                    e.preventDefault();
+                  }
+                }}
+              />
+              {error.amount && <p className="text-red-500">{error.amount}</p>}
+            </div>
 
-      <ExpenseChart data={expense} />
+            <label htmlFor="expense-category">Category</label>
+            <select
+              id="expense-category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="food">Food</option>
+              <option value="transportation">Transportation</option>
+              <option value="utilities">Utilities</option>
+              <option value="entertainment">Entertainment</option>
+              <option value="health">Health</option>
+              <option value="other">Other</option>
+            </select>
+
+            <label htmlFor="expense-description">Description</label>
+            <input
+              type="text"
+              value={description}
+              id="expense-description"
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <div>
+              <label htmlFor="expense-date">Date</label>
+              <input
+                type="date"
+                id="expense-date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+              />
+              {error.date && <p className="text-red-500">{error.date}</p>}
+            </div>
+
+            <button type="submit">Add Expense</button>
+          </form>
+        </div>
+        <div className="flex flex-1 flex-col gap-4 dark:bg-dark-card border dark:border-dark-border p-4 rounded-lg shadow-md overflow-y-scroll">
+          <ul>
+            {expense
+              .slice()
+              .sort(
+                (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+              )
+              .map((exp) => (
+                <li key={exp.id}>
+                  {exp.date} - ${exp.amount} - {exp.category} - {exp.description}
+                  <button
+                    onClick={async () => {
+                      const res = await fetch(`/api/expenses/${exp.id}`, {
+                        method: "DELETE",
+                      });
+                      if (res.ok) {
+                        fetch("/api/expenses")
+                          .then((res) => res.json())
+                          .then((data) => setExpense(data))
+                          .catch((err) =>
+                            console.error("Failed to fetch expenses:", err)
+                          );
+                      } else {
+                        console.error(
+                          "Failed to delete expense:",
+                          await res.json()
+                        );
+                      }
+                    }}
+                    style={{ marginLeft: "1em", color: "red" }}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+          </ul>
+        </div>
+      </div>
+      <div className="w-full max-w-4xl dark:bg-dark-card border dark:border-dark-border p-4 rounded-lg shadow-md">
+        <ExpenseChart data={expense} />
+      </div>
     </div>
   );
 }

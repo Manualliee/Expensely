@@ -27,7 +27,7 @@ export default function LoginForm() {
 
   return (
     <div className="bg-light-background text-light-foreground dark:bg-dark-background dark:text-dark-foreground min-h-screen flex items-center justify-center transition-colors">
-      <div className="w-[70vw] h-[70vh] dark:bg-dark-card border-2 dark:border-dark-border rounded-4xl flex flex-row bg-light-card overflow-hidden">
+      <div className="w-[70vw] h-[70vh] dark:bg-dark-card border-2 dark:border-dark-border rounded-4xl flex flex-row overflow-hidden">
         {/* Form container */}
         <div className="flex-1 h-full flex flex-col justify-center items-center p-2">
           <form
